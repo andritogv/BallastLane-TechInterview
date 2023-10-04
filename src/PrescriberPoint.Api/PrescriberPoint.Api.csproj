@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PrescriberPoint.Business\PrescriberPoint.Business.csproj" />
+    <ProjectReference Include="..\PrescriberPoint.Data\PrescriberPoint.Data.csproj" />
   </ItemGroup>
 
 </Project>

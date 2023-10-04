@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace PrescriberPoint.Data
 {
@@ -11,9 +12,9 @@ namespace PrescriberPoint.Data
     {
         private readonly string _connectionString;
 
-        public PrescriptionRepository(string connectionString)
+        public PrescriptionRepository(IOptions<DbOptions> config)
         {
-            _connectionString = connectionString;
+            _connectionString = config.Value.ConnectionString;
         }
 
         public async Task<Prescription> Get(string name)

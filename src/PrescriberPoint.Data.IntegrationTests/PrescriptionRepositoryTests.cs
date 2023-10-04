@@ -1,10 +1,11 @@
-﻿using System.Data.SqlClient;
-using PrescriberPoint.Domain;
+﻿using PrescriberPoint.Domain;
+using System.Data.SqlClient;
 
 namespace PrescriberPoint.Data.IntegrationTests;
 
 public class PrescriptionRepositoryTests : BaseRepositoryTests
 {
+
     public PrescriptionRepositoryTests()
     {
         // ToDo: add mechanism to prevent this from running in production
@@ -21,7 +22,7 @@ public class PrescriptionRepositoryTests : BaseRepositoryTests
     public async Task TestAddPrescription()
     {
         var userRepository = new UserRepository(ConnectionString);
-        var sut = new PrescriptionRepository(ConnectionString);
+        var sut = new PrescriptionRepository(DbOptions);
 
         var user = new User
         {
@@ -48,7 +49,7 @@ public class PrescriptionRepositoryTests : BaseRepositoryTests
     public async Task TestGetPrescription()
     {
         var userRepository = new UserRepository(ConnectionString);
-        var sut = new PrescriptionRepository(ConnectionString);
+        var sut = new PrescriptionRepository(DbOptions);
 
         var user = new User
         {
