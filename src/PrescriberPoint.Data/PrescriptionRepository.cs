@@ -14,7 +14,7 @@ namespace PrescriberPoint.Data
 
         public PrescriptionRepository(IOptions<DbOptions> config)
         {
-            _connectionString = config.Value.ConnectionString;
+            _connectionString = config.Value.DefaultConnection;
         }
 
         public async Task<Prescription> Get(string name)

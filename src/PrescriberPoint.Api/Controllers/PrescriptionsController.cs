@@ -15,21 +15,12 @@ namespace PrescriberPoint.Api.Controllers
             _prescriptionService = prescriptionService;
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> Get(int userId)
         {
-            var userId = 1;
-            // userId should come from authenticated user
+            var result = await _prescriptionService.GetPrescriptionsByUser(userId);
 
-            var prescriptions = _prescriptionService.GetPrescriptionsByUser(userId);
-
-            return Ok(prescriptions);
-        }
-
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            return Ok(result);
         }
 
         [HttpPost]
