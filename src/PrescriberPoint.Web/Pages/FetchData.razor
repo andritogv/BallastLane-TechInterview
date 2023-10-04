@@ -1,0 +1,43 @@
+﻿@page "/fetchdata"
+@using PrescriberPoint.Domain
+@inject HttpClient Http
+
+<PageTitle>Prescriptions</PageTitle>
+
+<h1>Prescriptions</h1>
+
+<p>These are prescriptions.</p>
+
+@if (_prescriptions == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var prescription in _prescriptions)
+            {
+                <tr>
+                    <td>@prescription.Name</td>
+                    <td>@prescription.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Prescription[]? _prescriptions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _prescriptions = await Http.GetFromJsonAsync<Prescription[]>("https://localhost:44348/api/Prescriptions/2002");
+    }
+}
