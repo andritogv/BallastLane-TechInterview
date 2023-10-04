@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using PrescriberPoint.Business.Repositories;
 using PrescriberPoint.Domain;
 using System.Data.SqlClient;
+using System.Xml.Linq;
 
 namespace PrescriberPoint.Data
 {
@@ -14,6 +15,29 @@ namespace PrescriberPoint.Data
         public UserRepository(string connectionString)
         {
             _connectionString = connectionString;
+        }
+
+        public async Task<User> Get(int id)
+        {
+            var result = new User();
+
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            const string sql = "SELECT [Id], [Username] FROM [dbo].[User] WHERE [Id] = @Id";
+
+            await using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = id;
+
+            await using var reader = await command.ExecuteReaderAsync();
+            if (reader.Read())
+            {
+                result.Id = reader.GetInt32(0);
+                result.Username = reader.GetString(1);
+            }
+
+            return result;
         }
 
         public async Task<User> Get(string name)

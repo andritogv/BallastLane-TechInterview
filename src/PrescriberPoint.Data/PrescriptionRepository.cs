@@ -17,6 +17,31 @@ namespace PrescriberPoint.Data
             _connectionString = config.Value.DefaultConnection;
         }
 
+        public async Task<Prescription> Get(int id)
+        {
+            var result = new Prescription();
+
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            const string sql = "SELECT [Id], [UserId], [Name], [Description] FROM [dbo].[Prescription] WHERE [Id] = @Id";
+
+            await using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.Add("@Id", SqlDbType.NVarChar).Value = id;
+
+            await using var reader = await command.ExecuteReaderAsync();
+            if (reader.Read())
+            {
+                result.Id = reader.GetInt32(0);
+                result.UserId = reader.GetInt32(1);
+                result.Name = reader.GetString(2);
+                result.Description = reader.GetString(3);
+            }
+
+            return result;
+        }
+
         public async Task<Prescription> Get(string name)
         {
             var result = new Prescription();

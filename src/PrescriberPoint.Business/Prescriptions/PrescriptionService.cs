@@ -15,6 +15,11 @@ namespace PrescriberPoint.Business.Prescriptions
             _prescriptionRepository = prescriptionRepository;
         }
 
+        public async Task<Prescription> GetPrescription(int id)
+        {
+            return await _prescriptionRepository.Get(id);
+        }
+
         public async Task<IReadOnlyList<Prescription>> GetPrescriptionsByUser(int userId)
         {
             return await _prescriptionRepository.GetAllByUser(userId);

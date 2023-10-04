@@ -1,4 +1,4 @@
-﻿@page "/fetchdata"
+﻿@page "/prescriptions"
 @using PrescriberPoint.Domain
 @inject HttpClient Http
 
@@ -38,6 +38,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _prescriptions = await Http.GetFromJsonAsync<Prescription[]>("https://localhost:44348/api/Prescriptions/2002");
+        _prescriptions = await Http.GetFromJsonAsync<Prescription[]>("https://localhost:44348/api/Prescriptions");
     }
 }

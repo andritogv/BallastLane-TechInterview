@@ -1,0 +1,55 @@
+﻿@page "/editprescription/{PrescriptionId:int}"
+@page "/editprescription"
+@using PrescriberPoint.Domain
+@inject HttpClient Http
+
+<PageTitle>Prescription</PageTitle>
+
+<h3>Prescription</h3>
+
+<div class="container">
+    <h3>Add/Edit Prescription</h3>
+    <form @onsubmit="HandleSubmit">
+        <div class="form-group">
+            <label for="prescriptionName">Prescription Name:</label>
+            <input id="prescriptionName" @bind="_prescription.Name" type="text" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="prescriptionDescription">Description:</label>
+            <textarea id="prescriptionDescription" @bind="_prescription.Description" class="form-control"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+@code {
+
+    [Parameter]
+    public int PrescriptionId { get; set; }
+
+    private Prescription _prescription = new Prescription();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (PrescriptionId > 0)
+        {
+            _prescription = await Http.GetFromJsonAsync<Prescription>($"https://your-api-endpoint/prescriptions/{PrescriptionId}");
+        }
+    }
+
+    private void HandleSubmit()
+    {
+        if (string.IsNullOrWhiteSpace(_prescription.Name) || string.IsNullOrWhiteSpace(_prescription.Description))
+        {
+    // Implement your validation logic here
+            return;
+        }
+
+    // Add/Edit your prescription to your data source (e.g., Database, API, etc.)
+    // For this example, I'm just going to output it to the console
+        Console.WriteLine($"Prescription Name: {_prescription.Name}");
+        Console.WriteLine($"Prescription Description: {_prescription.Description}");
+    }
+}

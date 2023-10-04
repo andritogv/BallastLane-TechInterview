@@ -6,6 +6,8 @@ namespace PrescriberPoint.Business.Prescriptions
 {
     public interface IPrescriptionService
     {
+        Task<Prescription> GetPrescription(int id);
+
         Task<IReadOnlyList<Prescription>> GetPrescriptionsByUser(int userId);
 
         Task<bool> AddPrescription(Prescription prescription);

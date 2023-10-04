@@ -6,6 +6,8 @@ namespace PrescriberPoint.Business.Repositories
 {
     public interface IRepository<T> where T : EntityBase
     {
+        Task<T> Get(int id);
+
         Task<T> Get(string name);
 
         Task<IEnumerable<T>> GetAll();
