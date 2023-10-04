@@ -1,6 +1,7 @@
-﻿namespace PrescriberPoint.Domain;
-
-public abstract class EntityBase
+﻿namespace PrescriberPoint.Domain
 {
-    public int Id { get; set; }
+    public abstract class EntityBase
+    {
+        public int Id { get; set; }
+    }
 }

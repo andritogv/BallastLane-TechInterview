@@ -1,8 +1,10 @@
 ﻿using PrescriberPoint.Domain;
+using System.Collections.Generic;
 
-namespace PrescriberPoint.Business.Repositories;
-
-public interface IPrescriptionRepository : IRepository<Prescription>
+namespace PrescriberPoint.Business.Repositories
 {
-    IReadOnlyList<Prescription> GetAllByUser(int userId);
+    public interface IPrescriptionRepository : IRepository<Prescription>
+    {
+        IReadOnlyList<Prescription> GetAllByUser(int userId);
+    }
 }

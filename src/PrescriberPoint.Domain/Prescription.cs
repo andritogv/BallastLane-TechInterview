@@ -1,8 +1,9 @@
-﻿namespace PrescriberPoint.Domain;
-
-public class Prescription : EntityBase
+﻿namespace PrescriberPoint.Domain
 {
-    public int UserId { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string Description { get; set; } = string.Empty;
+    public class Prescription : EntityBase
+    {
+        public int UserId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+    }
 }

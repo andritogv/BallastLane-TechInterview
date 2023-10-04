@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
@@ -11,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Users\" />
     <Folder Include="Prescriptions\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
