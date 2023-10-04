@@ -14,3 +14,4 @@ The application was implemented using clean architecture principles, starting fr
 
 All dependencies point inward into the Business and Domain Layers.
 
+![image](https://github.com/andritogv/BallastLane-TechInterview/assets/13070989/cdecdbde-d5b2-4984-9720-14ebbc4e25b2)
