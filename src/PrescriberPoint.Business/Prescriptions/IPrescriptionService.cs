@@ -1,11 +1,12 @@
 ﻿using PrescriberPoint.Domain;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PrescriberPoint.Business.Prescriptions
 {
     public interface IPrescriptionService
     {
-        IReadOnlyList<Prescription> GetPrescriptionsByUser(int userId);
+        Task<IReadOnlyList<Prescription>> GetPrescriptionsByUser(int userId);
 
         void AddPrescription(Prescription prescription);
 

@@ -8,7 +8,7 @@ namespace PrescriberPoint.Business.Tests;
 public class PrescriptionServiceTests
 {
     [Fact]
-    public void TestGetPrescriptionsByUserShouldReturnPrescriptions()
+    public async Task TestGetPrescriptionsByUserShouldReturnPrescriptions()
     {
         var prescriptionRepositoryMock = new Mock<IPrescriptionRepository>();
         var sut = new PrescriptionService(prescriptionRepositoryMock.Object);
@@ -21,9 +21,9 @@ public class PrescriptionServiceTests
             new Prescription()
         };
 
-        prescriptionRepositoryMock.Setup(x => x.GetAllByUser(userId)).Returns(prescriptions);
+        prescriptionRepositoryMock.Setup(x => x.GetAllByUser(userId)).Returns(() => Task.FromResult(prescriptions));
 
-        var result = sut.GetPrescriptionsByUser(userId);
+        var result = await sut.GetPrescriptionsByUser(userId);
 
         Assert.Equal(prescriptions, result);
     }

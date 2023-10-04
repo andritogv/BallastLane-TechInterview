@@ -2,6 +2,7 @@
 using PrescriberPoint.Domain;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PrescriberPoint.Business.Prescriptions
 {
@@ -14,9 +15,9 @@ namespace PrescriberPoint.Business.Prescriptions
             _prescriptionRepository = prescriptionRepository;
         }
 
-        public IReadOnlyList<Prescription> GetPrescriptionsByUser(int userId)
+        public async Task<IReadOnlyList<Prescription>> GetPrescriptionsByUser(int userId)
         {
-            return _prescriptionRepository.GetAllByUser(userId);
+            return await _prescriptionRepository.GetAllByUser(userId);
         }
 
         public void AddPrescription(Prescription prescription)

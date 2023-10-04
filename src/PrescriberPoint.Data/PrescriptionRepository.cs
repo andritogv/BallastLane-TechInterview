@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data;
-using System.Threading.Tasks;
-using PrescriberPoint.Business.Repositories;
+﻿using PrescriberPoint.Business.Repositories;
 using PrescriberPoint.Domain;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace PrescriberPoint.Data
 {
@@ -72,9 +72,31 @@ namespace PrescriberPoint.Data
             throw new System.NotImplementedException();
         }
 
-        public IReadOnlyList<Prescription> GetAllByUser(int userId)
+        public async Task<IReadOnlyList<Prescription>> GetAllByUser(int userId)
         {
-            throw new System.NotImplementedException();
-        }
+            var result = new List<Prescription>();
+
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            const string sql = "SELECT [Id], [UserId], [Name], [Description] FROM [dbo].[Prescription] WHERE [UserId] = @UserId";
+
+            await using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.Add("@UserId", SqlDbType.NVarChar).Value = userId;
+
+            await using var reader = await command.ExecuteReaderAsync();
+            while (reader.Read())
+            {
+                result.Add(new Prescription
+                {
+                    Id = reader.GetInt32(0),
+                    UserId = reader.GetInt32(1),
+                    Name = reader.GetString(2),
+                    Description = reader.GetString(3)
+                });
+            }
+
+            return result;        }
     }
 }
