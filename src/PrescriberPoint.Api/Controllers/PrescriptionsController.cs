@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PrescriberPoint.Business.Prescriptions;
+using PrescriberPoint.Domain;
 
 namespace PrescriberPoint.Api.Controllers
 {
@@ -6,33 +8,40 @@ namespace PrescriberPoint.Api.Controllers
     [ApiController]
     public class PrescriptionsController : ControllerBase
     {
-        // GET: api/<PrescriptionsController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IPrescriptionService _prescriptionService;
+
+        public PrescriptionsController(IPrescriptionService prescriptionService)
         {
-            return new string[] { "value1", "value2" };
+            _prescriptionService = prescriptionService;
         }
 
-        // GET api/<PrescriptionsController>/5
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var userId = 1;
+            // userId should come from authenticated user
+
+            var prescriptions = _prescriptionService.GetPrescriptionsByUser(userId);
+
+            return Ok(prescriptions);
+        }
+
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<PrescriptionsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post([FromBody] Prescription prescription)
         {
         }
 
-        // PUT api/<PrescriptionsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public void Put(int id, [FromBody] Prescription prescription)
         {
         }
 
-        // DELETE api/<PrescriptionsController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
