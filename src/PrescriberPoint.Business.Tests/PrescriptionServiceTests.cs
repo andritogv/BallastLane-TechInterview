@@ -17,4 +17,21 @@ public class PrescriptionServiceTests
 
         Assert.Throws<ArgumentException>(() => sut.AddPrescription(prescription));
     }
+
+    [Fact]
+    public void TestAddPrescriptionShouldAddInRepository()
+    {
+        var prescriptionRepositoryMock = new Mock<IPrescriptionRepository>();
+        var sut = new PrescriptionService(prescriptionRepositoryMock.Object);
+
+        var prescription = new Prescription
+        {
+            Name = "testname",
+            Description = "testdescription"
+        };
+
+        sut.AddPrescription(prescription);
+
+        prescriptionRepositoryMock.Verify(x => x.Add(prescription), Times.Once);
+    }
 }
