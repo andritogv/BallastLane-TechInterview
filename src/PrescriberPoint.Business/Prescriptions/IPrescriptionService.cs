@@ -12,6 +12,6 @@ namespace PrescriberPoint.Business.Prescriptions
 
         Task<bool> UpdatePrescription(Prescription prescription);
 
-        void DeletePrescription(int id);
+        Task<bool> DeletePrescription(int id);
     }
 }

@@ -25,7 +25,7 @@ namespace PrescriberPoint.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreatePrescriptionRequest prescription)
+        public async Task<IActionResult> Post([FromBody] CreatePrescriptionRequest request)
         {
             //ToDo: UserId should come from authentication
             var userId = 2002;
@@ -33,8 +33,8 @@ namespace PrescriberPoint.Api.Controllers
             var newPrescription = new Prescription
             {
                 UserId = userId,
-                Name = prescription.Name,
-                Description = prescription.Description
+                Name = request.Name,
+                Description = request.Description
             };
 
             if (await _prescriptionService.AddPrescription(newPrescription))
@@ -48,17 +48,17 @@ namespace PrescriberPoint.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] UpdatePrescriptionRequest prescription)
+        public async Task<IActionResult> Put([FromBody] UpdatePrescriptionRequest request)
         {
             //ToDo: UserId should come from authentication
             var userId = 2002;
 
             var updatedPrescription = new Prescription
             {
-                Id = prescription.Id,
+                Id = request.Id,
                 UserId = userId,
-                Name = prescription.Name,
-                Description = prescription.Description
+                Name = request.Name,
+                Description = request.Description
             };
 
             if (await _prescriptionService.UpdatePrescription(updatedPrescription))
@@ -72,9 +72,17 @@ namespace PrescriberPoint.Api.Controllers
 
         }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeletePrescriptionRequest request)
         {
+            if (await _prescriptionService.DeletePrescription(request.Id))
+            {
+                return Ok("Prescription successfully deleted.");
+            }
+            else
+            {
+                return BadRequest("Prescription could not be deleted.");
+            }
         }
     }
 }

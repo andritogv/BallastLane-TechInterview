@@ -80,9 +80,18 @@ namespace PrescriberPoint.Data
             return await command.ExecuteNonQueryAsync() > 0;
         }
 
-        public Task<int> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            throw new System.NotImplementedException();
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            const string sql = "DELETE FROM [dbo].[Prescription] WHERE Id = @Id";
+
+            await using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.Add("@Id", SqlDbType.Int).Value = id;
+
+            return await command.ExecuteNonQueryAsync() > 0;
         }
 
         public async Task<IReadOnlyList<Prescription>> GetAllByUser(int userId)

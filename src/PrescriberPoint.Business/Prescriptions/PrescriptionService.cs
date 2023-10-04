@@ -34,9 +34,9 @@ namespace PrescriberPoint.Business.Prescriptions
             return _prescriptionRepository.Update(prescription);
         }
 
-        public void DeletePrescription(int id)
+        public Task<bool> DeletePrescription(int id)
         {
-            _prescriptionRepository.Delete(id);
+            return _prescriptionRepository.Delete(id);
         }
 
         private void ValidatePrescription(Prescription prescription)

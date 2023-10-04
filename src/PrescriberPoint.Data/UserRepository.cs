@@ -64,7 +64,7 @@ namespace PrescriberPoint.Data
             throw new System.NotImplementedException();
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             await using var connection = new SqlConnection(_connectionString);
             connection.Open();
@@ -75,7 +75,7 @@ namespace PrescriberPoint.Data
 
             command.Parameters.Add("@Id", SqlDbType.Int).Value = id;
 
-            return await command.ExecuteNonQueryAsync();
+            return await command.ExecuteNonQueryAsync() > 0;
         }
 
         public async Task<bool> Authenticate(string username, string password)

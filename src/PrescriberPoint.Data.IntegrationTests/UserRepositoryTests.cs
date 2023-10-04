@@ -87,6 +87,6 @@ public class UserRepositoryTests : BaseRepositoryTests
 
         var result = await sut.Delete(userToDelete.Id);
 
-        Assert.True(result > 0);
+        Assert.True(result);
     }
 }

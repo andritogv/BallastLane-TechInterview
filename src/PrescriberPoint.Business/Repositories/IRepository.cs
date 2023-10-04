@@ -14,7 +14,7 @@ namespace PrescriberPoint.Business.Repositories
 
         Task<bool> Update(T entity);
 
-        Task<int> Delete(int id);
+        Task<bool> Delete(int id);
 
     }
 }
