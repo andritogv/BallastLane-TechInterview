@@ -2,13 +2,12 @@
 @page "/editprescription"
 @using PrescriberPoint.Domain
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <PageTitle>Prescription</PageTitle>
 
-<h3>Prescription</h3>
-
 <div class="container">
-    <h3>Add/Edit Prescription</h3>
+    <h3>Prescription</h3>
     <form @onsubmit="HandleSubmit">
         <div class="form-group">
             <label for="prescriptionName">Prescription Name:</label>
@@ -20,7 +19,8 @@
             <textarea id="prescriptionDescription" @bind="_prescription.Description" class="form-control"></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+
     </form>
 </div>
 
@@ -35,7 +35,7 @@
     {
         if (PrescriptionId > 0)
         {
-            _prescription = await Http.GetFromJsonAsync<Prescription>($"https://your-api-endpoint/prescriptions/{PrescriptionId}");
+            _prescription = await Http.GetFromJsonAsync<Prescription>($"https://localhost:44348/api/Prescriptions/{PrescriptionId}");
         }
     }
 
@@ -46,6 +46,19 @@
     // Implement your validation logic here
             return;
         }
+
+        if (PrescriptionId > 0)
+        {
+            var putData = 
+            Http.PutAsJsonAsync($"https://localhost:44348/api/Prescriptions/{PrescriptionId}", _prescription);
+        }
+        else
+        {
+            Http.PostAsJsonAsync("https://localhost:44348/api/Prescriptions", _prescription);
+        }
+
+        NavigationManager.NavigateTo("/prescriptions");
+
 
     // Add/Edit your prescription to your data source (e.g., Database, API, etc.)
     // For this example, I'm just going to output it to the console

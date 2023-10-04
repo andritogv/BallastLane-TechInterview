@@ -1,6 +1,7 @@
 ﻿@page "/prescriptions"
 @using PrescriberPoint.Domain
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <PageTitle>Prescriptions</PageTitle>
 
@@ -19,6 +20,7 @@ else
             <tr>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +29,7 @@ else
                 <tr>
                     <td>@prescription.Name</td>
                     <td>@prescription.Description</td>
+                    <td><button class="btn btn-primary" @onclick="@(() => Edit(@prescription.Id))">Edit</button></td>
                 </tr>
             }
         </tbody>
@@ -39,5 +42,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         _prescriptions = await Http.GetFromJsonAsync<Prescription[]>("https://localhost:44348/api/Prescriptions");
+    }
+
+    private void Edit(int prescriptionId)
+    {
+        NavigationManager.NavigateTo($"/editprescription/{prescriptionId}");
     }
 }

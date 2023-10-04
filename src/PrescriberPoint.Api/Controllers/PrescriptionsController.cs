@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PrescriberPoint.Api.Contract;
+using PrescriberPoint.Business.ApiContract;
 using PrescriberPoint.Business.Prescriptions;
 using PrescriberPoint.Domain;
 
