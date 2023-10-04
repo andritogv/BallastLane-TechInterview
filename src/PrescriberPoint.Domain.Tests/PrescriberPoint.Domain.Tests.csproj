@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PrescriberPoint.Domain\PrescriberPoint.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
