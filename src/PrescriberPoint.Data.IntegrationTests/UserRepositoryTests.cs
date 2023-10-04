@@ -48,4 +48,45 @@ public class UserRepositoryTests : BaseRepositoryTests
 
         Assert.True(result > 0);
     }
+
+    [Fact]
+    public async Task TestGetUser()
+    {
+        var sut = new UserRepository(ConnectionString);
+
+        var user = new User
+        {
+            Username = "testuser",
+            Password = "testpassword"
+        };
+
+        _ = await sut.Add(user);
+
+        var result = await sut.Get(user.Username);
+
+        Assert.NotNull(result);
+        Assert.True(result.Id > 0);
+        Assert.Equal(user.Username, result.Username);
+        Assert.Equal(string.Empty,result.Password);
+    }
+
+    [Fact]
+    public async Task TestDeleteUser()
+    {
+        var sut = new UserRepository(ConnectionString);
+
+        var user = new User
+        {
+            Username = "testuser",
+            Password = "testpassword"
+        };
+
+        _ = await sut.Add(user);
+
+        var userToDelete = await sut.Get(user.Username);
+
+        var result = await sut.Delete(userToDelete.Id);
+
+        Assert.True(result > 0);
+    }
 }

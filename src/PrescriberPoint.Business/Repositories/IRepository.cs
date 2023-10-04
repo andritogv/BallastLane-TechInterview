@@ -6,15 +6,15 @@ namespace PrescriberPoint.Business.Repositories
 {
     public interface IRepository<T> where T : EntityBase
     {
-        T Get(int id);
+        Task<T> Get(string name);
 
-        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAll();
 
         Task<int> Add(T entity);
 
         void Update(T entity);
 
-        void Delete(int id);
+        Task<int> Delete(int id);
 
     }
 }

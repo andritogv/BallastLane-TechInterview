@@ -15,12 +15,30 @@ namespace PrescriberPoint.Data
             _connectionString = connectionString;
         }
 
-        public User Get(int id)
+        public async Task<User> Get(string name)
         {
-            throw new System.NotImplementedException();
+            var result = new User();
+
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            const string sql = "SELECT [Id], [Username] FROM [dbo].[User] WHERE [Username] = @Username";
+
+            await using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.Add("@Username", SqlDbType.NVarChar).Value = name;
+
+            await using var reader = await command.ExecuteReaderAsync();
+            if (reader.Read())
+            {
+                result.Id = reader.GetInt32(0);
+                result.Username = reader.GetString(1);
+            }
+
+            return result;
         }
 
-        public IEnumerable<User> GetAll()
+        public Task<IEnumerable<User>> GetAll()
         {
             throw new System.NotImplementedException();
         }
@@ -45,9 +63,18 @@ namespace PrescriberPoint.Data
             throw new System.NotImplementedException();
         }
 
-        public void Delete(int id)
+        public async Task<int> Delete(int id)
         {
-            throw new System.NotImplementedException();
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            const string sql = "DELETE FROM [dbo].[User] WHERE [Id] = @Id";
+
+            await using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.Add("@Id", SqlDbType.Int).Value = id;
+
+            return await command.ExecuteNonQueryAsync();
         }
 
         public async Task<bool> Authenticate(string username, string password)
