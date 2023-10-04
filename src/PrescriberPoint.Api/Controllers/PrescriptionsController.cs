@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PrescriberPoint.Api.Contract;
 using PrescriberPoint.Business.Prescriptions;
 using PrescriberPoint.Domain;
 
@@ -24,8 +25,26 @@ namespace PrescriberPoint.Api.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] Prescription prescription)
+        public async Task<IActionResult> Post([FromBody] CreatePrescriptionRequest prescription)
         {
+            //ToDo: UserId should come from authentication
+            var userId = 2002;
+
+            var newPrescription = new Prescription
+            {
+                UserId = userId,
+                Name = prescription.Name,
+                Description = prescription.Description
+            };
+
+            if (await _prescriptionService.AddPrescription(newPrescription))
+            {
+                return Ok("Prescription successfully created.");
+            }
+            else
+            {
+                return BadRequest("Prescription could not be created.");
+            }
         }
 
         [HttpPut]

@@ -46,7 +46,7 @@ public class UserRepositoryTests : BaseRepositoryTests
 
         var result = await sut.Add(user);
 
-        Assert.True(result > 0);
+        Assert.True(result);
     }
 
     [Fact]

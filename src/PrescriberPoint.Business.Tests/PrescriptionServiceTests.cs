@@ -36,7 +36,7 @@ public class PrescriptionServiceTests
 
         var prescription = new Prescription();
 
-        Assert.Throws<ArgumentException>(() => sut.AddPrescription(prescription));
+        Assert.ThrowsAsync<ArgumentException>(() => sut.AddPrescription(prescription));
     }
 
     [Fact]

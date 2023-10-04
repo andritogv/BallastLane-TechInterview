@@ -8,6 +8,6 @@ public class BaseRepositoryTests
 
     protected IOptions<DbOptions> DbOptions { get; } = Options.Create(new DbOptions
     {
-        ConnectionString = ConnectionString
+        DefaultConnection = ConnectionString
     });
 }

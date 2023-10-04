@@ -42,7 +42,7 @@ public class PrescriptionRepositoryTests : BaseRepositoryTests
 
         var result = await sut.Add(prescription);
 
-        Assert.True(result > 0);
+        Assert.True(result);
     }
 
     [Fact]

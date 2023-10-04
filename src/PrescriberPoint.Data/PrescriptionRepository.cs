@@ -47,7 +47,7 @@ namespace PrescriberPoint.Data
             throw new System.NotImplementedException();
         }
 
-        public async Task<int> Add(Prescription entity)
+        public async Task<bool> Add(Prescription entity)
         {
             await using var connection = new SqlConnection(_connectionString);
             connection.Open();
@@ -60,7 +60,7 @@ namespace PrescriberPoint.Data
             command.Parameters.Add("@Name", SqlDbType.NVarChar).Value = entity.Name;
             command.Parameters.Add("@Description", SqlDbType.NVarChar).Value = entity.Description;
 
-            return await command.ExecuteNonQueryAsync();
+            return await command.ExecuteNonQueryAsync() > 0;
         }
 
         public void Update(Prescription entity)

@@ -8,7 +8,7 @@ namespace PrescriberPoint.Business.Prescriptions
     {
         Task<IReadOnlyList<Prescription>> GetPrescriptionsByUser(int userId);
 
-        void AddPrescription(Prescription prescription);
+        Task<bool> AddPrescription(Prescription prescription);
 
         void UpdatePrescription(Prescription prescription);
 

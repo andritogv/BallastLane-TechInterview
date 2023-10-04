@@ -10,7 +10,7 @@ namespace PrescriberPoint.Business.Repositories
 
         Task<IEnumerable<T>> GetAll();
 
-        Task<int> Add(T entity);
+        Task<bool> Add(T entity);
 
         void Update(T entity);
 

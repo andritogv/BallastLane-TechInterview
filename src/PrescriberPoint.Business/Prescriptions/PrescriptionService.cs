@@ -20,11 +20,11 @@ namespace PrescriberPoint.Business.Prescriptions
             return await _prescriptionRepository.GetAllByUser(userId);
         }
 
-        public void AddPrescription(Prescription prescription)
+        public Task<bool> AddPrescription(Prescription prescription)
         {
             ValidatePrescription(prescription);
 
-            _prescriptionRepository.Add(prescription);
+            return _prescriptionRepository.Add(prescription);
         }
 
         public void UpdatePrescription(Prescription prescription)
