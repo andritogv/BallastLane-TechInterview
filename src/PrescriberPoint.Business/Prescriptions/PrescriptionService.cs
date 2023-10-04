@@ -6,6 +6,10 @@ public class PrescriptionService : IPrescriptionService
 {
     public void AddPrescription(Prescription prescription)
     {
-        throw new NotImplementedException();
+        if (prescription == null || string.IsNullOrEmpty(prescription.Name) || string.IsNullOrEmpty(prescription.Description))
+        {
+            throw new ArgumentException("Prescription cannot contain empty data");
+
+        }
     }
 }
