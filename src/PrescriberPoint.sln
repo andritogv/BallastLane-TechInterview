@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrescriberPoint.Api.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrescriberPoint.Data", "PrescriberPoint.Data\PrescriberPoint.Data.csproj", "{DF0D7B4C-CF5D-4E13-A0B7-5F14EB3F519B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrescriberPoint.Data.IntegrationTests", "PrescriberPoint.Data.IntegrationTests\PrescriberPoint.Data.IntegrationTests.csproj", "{7122EF4F-BD19-4703-ADC0-B38B0DBB73D4}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PrescriberPoint.Database", "PrescriberPoint.Database\PrescriberPoint.Database.sqlproj", "{541ED5A6-DBE1-46E9-9A67-B47FE52C9857}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,16 @@ Global
 		{DF0D7B4C-CF5D-4E13-A0B7-5F14EB3F519B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF0D7B4C-CF5D-4E13-A0B7-5F14EB3F519B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF0D7B4C-CF5D-4E13-A0B7-5F14EB3F519B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7122EF4F-BD19-4703-ADC0-B38B0DBB73D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7122EF4F-BD19-4703-ADC0-B38B0DBB73D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7122EF4F-BD19-4703-ADC0-B38B0DBB73D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7122EF4F-BD19-4703-ADC0-B38B0DBB73D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{541ED5A6-DBE1-46E9-9A67-B47FE52C9857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{541ED5A6-DBE1-46E9-9A67-B47FE52C9857}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{541ED5A6-DBE1-46E9-9A67-B47FE52C9857}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{541ED5A6-DBE1-46E9-9A67-B47FE52C9857}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{541ED5A6-DBE1-46E9-9A67-B47FE52C9857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{541ED5A6-DBE1-46E9-9A67-B47FE52C9857}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +75,7 @@ Global
 		{B0DD81A7-DD92-4F07-8537-C03EB575A0E6} = {1FB2DBC7-A317-4152-B90E-283AA00E7C07}
 		{D296B4F1-F2B2-49E0-B1E6-BDCFFC201A3E} = {1FB2DBC7-A317-4152-B90E-283AA00E7C07}
 		{D424D25E-B8C5-4774-8DD0-5A34A6D22067} = {1FB2DBC7-A317-4152-B90E-283AA00E7C07}
+		{7122EF4F-BD19-4703-ADC0-B38B0DBB73D4} = {1FB2DBC7-A317-4152-B90E-283AA00E7C07}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4CBED16C-12F7-4C80-B37C-E46091AFE0C8}

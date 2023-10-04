@@ -1,5 +1,6 @@
 ﻿using PrescriberPoint.Domain;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PrescriberPoint.Business.Repositories
 {
@@ -9,7 +10,7 @@ namespace PrescriberPoint.Business.Repositories
 
         IEnumerable<T> GetAll();
 
-        void Add(T entity);
+        Task<int> Add(T entity);
 
         void Update(T entity);
 
