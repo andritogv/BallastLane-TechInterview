@@ -1,15 +1,42 @@
-﻿using PrescriberPoint.Domain;
+﻿using System.Data.SqlClient;
+using PrescriberPoint.Domain;
 
 namespace PrescriberPoint.Data.IntegrationTests;
 
-public class UserRepositoryTests
+public class UserRepositoryTests : BaseRepositoryTests
 {
+    public UserRepositoryTests()
+    {
+        // ToDo: add mechanism to prevent this from running in production
+        // for testing purposes, we want to clear out the User table before each test
+        using var connection = new SqlConnection(ConnectionString);
+        connection.Open();
+        using var command = new SqlCommand("DELETE FROM [dbo].[User]", connection);
+        command.ExecuteNonQuery();
+    }
+
+    [Fact]
+    public async Task TestAuthenticateUser()
+    {
+        var sut = new UserRepository(ConnectionString);
+
+        var user = new User
+        {
+            Username = "testuser",
+            Password = "testpassword"
+        };
+
+        await sut.Add(user);
+
+        var result = await sut.Authenticate(user.Username, user.Password);
+
+        Assert.True(result);
+    }
+
     [Fact]
     public async Task TestAddUser()
     {
-        const string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=PrescriberPoint;User ID=prescriberpoint;Password=prescriberpoint;Connect Timeout=60;Encrypt=False;";
-
-        var sut = new UserRepository(connectionString);
+        var sut = new UserRepository(ConnectionString);
 
         var user = new User
         {

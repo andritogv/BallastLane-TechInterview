@@ -30,12 +30,12 @@ namespace PrescriberPoint.Data
             await using var connection = new SqlConnection(_connectionString);
             connection.Open();
 
-            var sql = "INSERT INTO [dbo].[User] (Username, Password) VALUES (@Username, @Password)";
+            const string sql = "INSERT INTO [dbo].[User] (Username, Password) VALUES (@Username, @Password)";
 
             await using var command = new SqlCommand(sql, connection);
 
             command.Parameters.Add("@Username", SqlDbType.NVarChar).Value = entity.Username;
-            command.Parameters.Add("@Password", SqlDbType.Text).Value = entity.Password;
+            command.Parameters.Add("@Password", SqlDbType.NVarChar).Value = entity.Password;
 
             return await command.ExecuteNonQueryAsync();
         }
@@ -50,12 +50,21 @@ namespace PrescriberPoint.Data
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> Authenticate(string username, string password)
+        public async Task<bool> Authenticate(string username, string password)
         {
-            //var user = _users.Find(u => u.Username == username && u.Password == password);
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
 
-            //return Task.FromResult(user != null);
-            throw new System.NotImplementedException();
+            const string sql = "SELECT [Username] FROM [dbo].[User] WHERE [Username] = @Username AND [Password] = @Password";
+
+            await using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.Add("@Username", SqlDbType.NVarChar).Value = username;
+            command.Parameters.Add("@Password", SqlDbType.NVarChar).Value = password;
+
+            await using var reader = await command.ExecuteReaderAsync();
+
+            return reader.HasRows;
         }
     }
 }
