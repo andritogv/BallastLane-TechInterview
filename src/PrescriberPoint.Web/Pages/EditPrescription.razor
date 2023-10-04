@@ -1,6 +1,7 @@
 ﻿@page "/editprescription/{PrescriptionId:int}"
 @page "/editprescription"
 @using PrescriberPoint.Domain
+@using PrescriberPoint.Business.ApiContract
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
@@ -18,6 +19,8 @@
             <label for="prescriptionDescription">Description:</label>
             <textarea id="prescriptionDescription" @bind="_prescription.Description" class="form-control"></textarea>
         </div>
+        
+        <br/>
 
         <button type="submit" class="btn btn-primary">Save</button>
 
@@ -33,36 +36,43 @@
 
     protected override async Task OnInitializedAsync()
     {
+        // ToDo: Add a prescriptionService to abstract Http calls
         if (PrescriptionId > 0)
         {
-            _prescription = await Http.GetFromJsonAsync<Prescription>($"https://localhost:44348/api/Prescriptions/{PrescriptionId}");
+            _prescription = await Http.GetFromJsonAsync<Prescription>($"api/Prescriptions/{PrescriptionId}");
         }
     }
 
-    private void HandleSubmit()
+    private async void HandleSubmit()
     {
         if (string.IsNullOrWhiteSpace(_prescription.Name) || string.IsNullOrWhiteSpace(_prescription.Description))
         {
-    // Implement your validation logic here
+            // Implement your validation logic here
             return;
         }
 
         if (PrescriptionId > 0)
         {
-            var putData = 
-            Http.PutAsJsonAsync($"https://localhost:44348/api/Prescriptions/{PrescriptionId}", _prescription);
+            var putData = new UpdatePrescriptionRequest
+            {
+                Id = _prescription.Id,
+                Name = _prescription.Name,
+                Description = _prescription.Description
+            };
+
+            await Http.PutAsJsonAsync("api/Prescriptions", putData);
         }
         else
         {
-            Http.PostAsJsonAsync("https://localhost:44348/api/Prescriptions", _prescription);
+            var postData = new CreatePrescriptionRequest
+            {
+                Name = _prescription.Name,
+                Description = _prescription.Description
+            };
+
+            await Http.PostAsJsonAsync("api/Prescriptions", postData);
         }
 
         NavigationManager.NavigateTo("/prescriptions");
-
-
-    // Add/Edit your prescription to your data source (e.g., Database, API, etc.)
-    // For this example, I'm just going to output it to the console
-        Console.WriteLine($"Prescription Name: {_prescription.Name}");
-        Console.WriteLine($"Prescription Description: {_prescription.Description}");
     }
 }

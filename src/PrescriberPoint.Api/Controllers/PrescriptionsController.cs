@@ -83,10 +83,10 @@ namespace PrescriberPoint.Api.Controllers
 
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeletePrescriptionRequest request)
+        [HttpDelete("{prescriptionId}")]
+        public async Task<IActionResult> Delete(int prescriptionId)
         {
-            if (await _prescriptionService.DeletePrescription(request.Id))
+            if (await _prescriptionService.DeletePrescription(prescriptionId))
             {
                 return Ok("Prescription successfully deleted.");
             }

@@ -1,5 +1,6 @@
 ﻿@page "/prescriptions"
 @using PrescriberPoint.Domain
+@using PrescriberPoint.Business.ApiContract
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
@@ -21,6 +22,7 @@ else
                 <th>Name</th>
                 <th>Description</th>
                 <th>Edit</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -30,22 +32,34 @@ else
                     <td>@prescription.Name</td>
                     <td>@prescription.Description</td>
                     <td><button class="btn btn-primary" @onclick="@(() => Edit(@prescription.Id))">Edit</button></td>
+                    <td><button class="btn btn-danger" @onclick="@(() => Delete(@prescription.Id))">Delete</button></td>
                 </tr>
             }
         </tbody>
     </table>
+
+    <br />
+
+    <button class="btn btn-primary" @onclick='() => NavigationManager.NavigateTo("/editprescription")'>Add New</button>
 }
 
 @code {
-    private Prescription[]? _prescriptions;
+    private List<Prescription> _prescriptions = new List<Prescription>();
 
     protected override async Task OnInitializedAsync()
     {
-        _prescriptions = await Http.GetFromJsonAsync<Prescription[]>("https://localhost:44348/api/Prescriptions");
+        _prescriptions = await Http.GetFromJsonAsync<List<Prescription>>("api/Prescriptions");
     }
 
     private void Edit(int prescriptionId)
     {
         NavigationManager.NavigateTo($"/editprescription/{prescriptionId}");
+    }
+
+    private async void Delete(int prescriptionId)
+    {
+        await Http.DeleteAsync($"api/Prescriptions/{prescriptionId}");
+        _prescriptions.Remove(_prescriptions.First(p => p.Id == prescriptionId));
+        StateHasChanged();
     }
 }
