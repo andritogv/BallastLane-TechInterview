@@ -8,6 +8,27 @@ namespace PrescriberPoint.Business.Tests;
 public class PrescriptionServiceTests
 {
     [Fact]
+    public void TestGetPrescriptionsByUserShouldReturnPrescriptions()
+    {
+        var prescriptionRepositoryMock = new Mock<IPrescriptionRepository>();
+        var sut = new PrescriptionService(prescriptionRepositoryMock.Object);
+
+        const int userId = 1;
+
+        var prescriptions = new List<Prescription>
+        {
+            new Prescription(),
+            new Prescription()
+        };
+
+        prescriptionRepositoryMock.Setup(x => x.GetAllByUser(userId)).Returns(prescriptions);
+
+        var result = sut.GetPrescriptionsByUser(userId);
+
+        Assert.Equal(prescriptions, result);
+    }
+
+    [Fact]
     public void TestAddPrescriptionShouldContainData()
     {
         var prescriptionRepositoryMock = new Mock<IPrescriptionRepository>();
@@ -33,5 +54,36 @@ public class PrescriptionServiceTests
         sut.AddPrescription(prescription);
 
         prescriptionRepositoryMock.Verify(x => x.Add(prescription), Times.Once);
+    }
+
+    [Fact]
+    public void TestUpdatePrescriptionShouldUpdateInRepository()
+    {
+        var prescriptionRepositoryMock = new Mock<IPrescriptionRepository>();
+        var sut = new PrescriptionService(prescriptionRepositoryMock.Object);
+
+        var prescription = new Prescription
+        {
+            Id = 1,
+            Name = "testname",
+            Description = "testdescription"
+        };
+
+        sut.UpdatePrescription(prescription);
+
+        prescriptionRepositoryMock.Verify(x => x.Update(prescription), Times.Once);
+    }
+
+    [Fact]
+    public void TestDeletePrescriptionShouldDeleteInRepository()
+    {
+        var prescriptionRepositoryMock = new Mock<IPrescriptionRepository>();
+        var sut = new PrescriptionService(prescriptionRepositoryMock.Object);
+
+        const int id = 1;
+
+        sut.DeletePrescription(id);
+
+        prescriptionRepositoryMock.Verify(x => x.Delete(id), Times.Once);
     }
 }
