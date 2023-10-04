@@ -59,7 +59,7 @@ namespace PrescriberPoint.Data
             return await command.ExecuteNonQueryAsync() > 0;
         }
 
-        public void Update(User entity)
+        public Task<bool> Update(User entity)
         {
             throw new System.NotImplementedException();
         }

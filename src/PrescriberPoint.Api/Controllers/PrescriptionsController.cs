@@ -48,8 +48,28 @@ namespace PrescriberPoint.Api.Controllers
         }
 
         [HttpPut]
-        public void Put(int id, [FromBody] Prescription prescription)
+        public async Task<IActionResult> Put([FromBody] UpdatePrescriptionRequest prescription)
         {
+            //ToDo: UserId should come from authentication
+            var userId = 2002;
+
+            var updatedPrescription = new Prescription
+            {
+                Id = prescription.Id,
+                UserId = userId,
+                Name = prescription.Name,
+                Description = prescription.Description
+            };
+
+            if (await _prescriptionService.UpdatePrescription(updatedPrescription))
+            {
+                return Ok("Prescription successfully updated.");
+            }
+            else
+            {
+                return BadRequest("Prescription could not be updated.");
+            }
+
         }
 
         [HttpDelete("{id}")]

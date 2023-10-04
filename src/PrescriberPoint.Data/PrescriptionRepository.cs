@@ -63,9 +63,21 @@ namespace PrescriberPoint.Data
             return await command.ExecuteNonQueryAsync() > 0;
         }
 
-        public void Update(Prescription entity)
+        public async Task<bool> Update(Prescription entity)
         {
-            throw new System.NotImplementedException();
+            await using var connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            const string sql = "UPDATE [dbo].[Prescription] SET Name = @Name, Description = @Description WHERE Id = @Id AND UserId = @UserId";
+
+            await using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.Add("@Id", SqlDbType.Int).Value = entity.Id;
+            command.Parameters.Add("@UserId", SqlDbType.Int).Value = entity.UserId;
+            command.Parameters.Add("@Name", SqlDbType.NVarChar).Value = entity.Name;
+            command.Parameters.Add("@Description", SqlDbType.NVarChar).Value = entity.Description;
+
+            return await command.ExecuteNonQueryAsync() > 0;
         }
 
         public Task<int> Delete(int id)
@@ -98,6 +110,7 @@ namespace PrescriberPoint.Data
                 });
             }
 
-            return result;        }
+            return result;
+        }
     }
 }

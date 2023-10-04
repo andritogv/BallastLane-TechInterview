@@ -10,7 +10,7 @@ namespace PrescriberPoint.Business.Prescriptions
 
         Task<bool> AddPrescription(Prescription prescription);
 
-        void UpdatePrescription(Prescription prescription);
+        Task<bool> UpdatePrescription(Prescription prescription);
 
         void DeletePrescription(int id);
     }

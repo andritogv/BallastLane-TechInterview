@@ -27,11 +27,11 @@ namespace PrescriberPoint.Business.Prescriptions
             return _prescriptionRepository.Add(prescription);
         }
 
-        public void UpdatePrescription(Prescription prescription)
+        public Task<bool> UpdatePrescription(Prescription prescription)
         {
             ValidatePrescription(prescription);
 
-            _prescriptionRepository.Update(prescription);
+            return _prescriptionRepository.Update(prescription);
         }
 
         public void DeletePrescription(int id)

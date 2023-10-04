@@ -12,7 +12,7 @@ namespace PrescriberPoint.Business.Repositories
 
         Task<bool> Add(T entity);
 
-        void Update(T entity);
+        Task<bool> Update(T entity);
 
         Task<int> Delete(int id);
 
